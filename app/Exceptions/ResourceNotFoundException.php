@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class ResourceNotFound extends Exception
+class ResourceNotFoundException extends Exception
 {
     /**
      * Render the exception into an HTTP response.

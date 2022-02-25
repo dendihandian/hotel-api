@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ResourceNotFound;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRoomTypeRequest;
@@ -48,12 +47,7 @@ class RoomTypeController extends Controller
      */
     public function show(Request $request)
     {
-        try {
-            $roomType = RoomType::FindOrFail($request->roomTypeId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
-
+        $roomType = $request->roomType;
         return response()->json(new RoomTypeResource($roomType), Response::HTTP_OK);
     }
 
@@ -65,12 +59,7 @@ class RoomTypeController extends Controller
      */
     public function update(UpdateRoomTypeRequest $request)
     {
-        try {
-            $roomType = RoomType::FindOrFail($request->roomTypeId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
-
+        $roomType = $request->roomType;
         $roomType->name = $request->name;
         $roomType->save();
         
@@ -85,11 +74,7 @@ class RoomTypeController extends Controller
      */
     public function destroy(Request $request)
     {
-        try {
-            $roomType = RoomType::FindOrFail($request->roomTypeId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
+        $roomType = $request->roomType;
         $roomType->delete();
 
         return response()->json(['message' => 'Resource deleted'], Response::HTTP_OK);

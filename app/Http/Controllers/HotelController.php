@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ResourceNotFound;
 use App\Http\Requests\StoreHotelRequest;
 use App\Http\Requests\UpdateHotelRequest;
 use App\Http\Resources\HotelCollection;
@@ -49,12 +48,7 @@ class HotelController extends Controller
      */
     public function show(Request $request)
     {
-        try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
-
+        $hotel = $request->hotel;
         return response()->json(new HotelResource($hotel), Response::HTTP_OK);
     }
 
@@ -66,11 +60,7 @@ class HotelController extends Controller
      */
     public function update(UpdateHotelRequest $request)
     {
-        try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
+        $hotel = $request->hotel;
 
         $hotel->hotel_name = $request->hotel_name;
         $hotel->address = $request->address;
@@ -87,11 +77,7 @@ class HotelController extends Controller
      */
     public function destroy(Request $request)
     {
-        try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
-        } catch (\Throwable $th) {
-            throw new ResourceNotFound();
-        }
+        $hotel = $request->hotel;
         $hotel->delete();
 
         return response()->json(['message' => 'Resource deleted'], Response::HTTP_OK);

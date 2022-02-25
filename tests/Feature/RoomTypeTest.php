@@ -57,3 +57,5 @@ class RoomTypeTest extends TestCase
             ->assertOk();
     }
 }
+
+// php artisan test --filter=RoomTypeTest

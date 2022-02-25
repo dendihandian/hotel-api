@@ -61,3 +61,5 @@ class HotelTest extends TestCase
             ->assertOk();
     }
 }
+
+// php artisan test --filter=HotelTest
