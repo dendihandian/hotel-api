@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HotelRequest extends FormRequest
+class UpdateHotelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,9 @@ class HotelRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'hotel_name' => ['required', 'max:64'],
             'address' => ['nullable'],
         ];
-
-        if ($this->isMethod('PUT')) {
-            // rules modification for update here
-        }
-
-        return $rules;
     }
 }

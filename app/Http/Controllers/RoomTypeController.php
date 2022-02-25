@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ResourceNotFound;
-use App\Http\Requests\StoreHotelRequest;
-use App\Http\Requests\UpdateHotelRequest;
-use App\Http\Resources\HotelCollection;
-use App\Http\Resources\HotelResource;
-use App\Models\Hotel;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRoomTypeRequest;
+use App\Http\Requests\UpdateRoomTypeRequest;
+use App\Http\Resources\RoomTypeCollection;
+use App\Http\Resources\RoomTypeResource;
 use Symfony\Component\HttpFoundation\Response;
 
-class HotelController extends Controller
+class RoomTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +21,8 @@ class HotelController extends Controller
      */
     public function index(Request $request)
     {
-        $hotels = Hotel::all();
-        return response()->json(new HotelCollection($hotels), Response::HTTP_OK);
+        $roomTypes = RoomType::all();
+        return response()->json(new RoomTypeCollection($roomTypes), Response::HTTP_OK);
     }
 
     /**
@@ -31,14 +31,13 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreHotelRequest $request)
+    public function store(StoreRoomTypeRequest $request)
     {
-        $hotel = Hotel::create([
-            'hotel_name' => $request->hotel_name,
-            'address' => $request->address,
+        $roomType = RoomType::create([
+            'name' => $request->name,
         ]);
         
-        return response()->json(new HotelResource($hotel), Response::HTTP_CREATED);
+        return response()->json(new RoomTypeResource($roomType), Response::HTTP_CREATED);
     }
     
     /**
@@ -50,12 +49,12 @@ class HotelController extends Controller
     public function show(Request $request)
     {
         try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
+            $roomType = RoomType::FindOrFail($request->roomTypeId);
         } catch (\Throwable $th) {
             throw new ResourceNotFound();
         }
 
-        return response()->json(new HotelResource($hotel), Response::HTTP_OK);
+        return response()->json(new RoomTypeResource($roomType), Response::HTTP_OK);
     }
 
     /**
@@ -64,19 +63,18 @@ class HotelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHotelRequest $request)
+    public function update(UpdateRoomTypeRequest $request)
     {
         try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
+            $roomType = RoomType::FindOrFail($request->roomTypeId);
         } catch (\Throwable $th) {
             throw new ResourceNotFound();
         }
 
-        $hotel->hotel_name = $request->hotel_name;
-        $hotel->address = $request->address;
-        $hotel->save();
+        $roomType->name = $request->name;
+        $roomType->save();
         
-        return response()->json(new HotelResource($hotel), Response::HTTP_OK);
+        return response()->json(new RoomTypeResource($roomType), Response::HTTP_OK);
     }
     
     /**
@@ -88,11 +86,11 @@ class HotelController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $hotel = Hotel::FindOrFail($request->hotelId);
+            $roomType = RoomType::FindOrFail($request->roomTypeId);
         } catch (\Throwable $th) {
             throw new ResourceNotFound();
         }
-        $hotel->delete();
+        $roomType->delete();
 
         return response()->json(['message' => 'Resource deleted'], Response::HTTP_OK);
     }

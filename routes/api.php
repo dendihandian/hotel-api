@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,12 @@ Route::prefix('hotels')->group(function(){
     Route::get('/{hotelId}', [HotelController::class, 'show']);
     Route::put('/{hotelId}', [HotelController::class, 'update']);
     Route::delete('/{hotelId}', [HotelController::class, 'destroy']);
+});
+
+Route::prefix('room-types')->group(function(){
+    Route::get('/', [RoomTypeController::class, 'index']);
+    Route::post('/', [RoomTypeController::class, 'store']);
+    Route::get('/{roomTypeId}', [RoomTypeController::class, 'show']);
+    Route::put('/{roomTypeId}', [RoomTypeController::class, 'update']);
+    Route::delete('/{roomTypeId}', [RoomTypeController::class, 'destroy']);
 });
